@@ -59,7 +59,7 @@ if __name__ == '__main__':
     server_file_name = sys.argv[3] if len(sys.argv) > 3 else 'server.py'
     pid = os.fork()
     if pid == 0:
-        os.chdir("/")
+        # os.chdir("/")
         os.umask(0)
         os.setsid()
         cid = os.fork()
@@ -71,8 +71,8 @@ if __name__ == '__main__':
             so = file(stdout, 'a+')
             se = file(stderr, 'a+', 0)
             os.dup2(si.fileno(), sys.stdin.fileno())
-            os.dup2(so.fileno(), sys.stdout.fileno())
-            os.dup2(se.fileno(), sys.stderr.fileno())
+            # os.dup2(so.fileno(), sys.stdout.fileno())
+            # os.dup2(se.fileno(), sys.stderr.fileno())
             while True:
                 ret = check_active(port=port)
                 if ret is not None:
