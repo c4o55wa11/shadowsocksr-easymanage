@@ -34,8 +34,10 @@ def log_except(func):
 @params_check
 def check_active(port=8080):
     command = "netstat -ano|grep tcp|grep :%d|grep -v grep|wc -l" % port
-    pipe = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
-    output = pipe.stdout.read(1024)
+    pipe = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    std_out, std_err = pipe.communicate()
+    # output = pipe.stdout.read(1024)
+    output = std_out
     return int(output) > 0
 
 
@@ -71,8 +73,8 @@ if __name__ == '__main__':
             so = file(stdout, 'a+')
             se = file(stderr, 'a+', 0)
             os.dup2(si.fileno(), sys.stdin.fileno())
-            # os.dup2(so.fileno(), sys.stdout.fileno())
-            # os.dup2(se.fileno(), sys.stderr.fileno())
+            os.dup2(so.fileno(), sys.stdout.fileno())
+            os.dup2(se.fileno(), sys.stderr.fileno())
             while True:
                 ret = check_active(port=port)
                 if ret is not None:
