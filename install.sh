@@ -1,5 +1,5 @@
 ssr_path='./shadowsocksr'
-if [ ! -d "$ssr_path"]; then
+if [ ! -d "$ssr_path" ]; then
     echo '[+] clone SSR project.'
     git clone https://github.com/shadowsocksr/shadowsocksr.git
     echo '[+] init configure files.'
