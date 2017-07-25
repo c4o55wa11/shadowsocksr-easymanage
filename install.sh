@@ -13,5 +13,4 @@ if [! -d "$ssr_path"]; then
     echo '[+] install finished.Have a good day!'
 else
     echo '[-]ShadowsocksR project already exists.'
-    echo '[-]If you still want to install or reinstall SSR, pleaser run \'rm -rf ./shadowsocksr \' first.'
-
+    echo '[-]If you still want to install or reinstall SSR, pleaser run "rm -rf ./shadowsocksr" first.'
