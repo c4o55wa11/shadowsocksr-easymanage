@@ -7,19 +7,6 @@ import time
 import subprocess
 
 
-def params_check(func):
-    def w(*args, **kwargs):
-        if kwargs.get('port', None):
-            if isinstance(kwargs['port'], int) and 0 < kwargs['port'] < 65536:
-                return func(*args, **kwargs)
-            else:
-                return None
-        else:
-            return None
-
-    return w
-
-
 def log_except(func):
     def w(*args, **kwargs):
         try:
@@ -31,14 +18,14 @@ def log_except(func):
 
 
 @log_except
-@params_check
-def check_active(port=8080):
-    command = "netstat -ano|grep tcp|grep :%d|grep -v grep|wc -l" % port
-    pipe = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    std_out, std_err = pipe.communicate()
-    # output = pipe.stdout.read(1024)
-    output = std_out
-    return int(output) > 0
+def check_active(pid_path='/var/run/shadowsocksr.pid'):
+    is_exist = False
+    if os.path.isfile(pid_path):
+        with open(pid_path, 'r+b') as file_handler:
+            ssr_pid = file_handler.readline().strip(os.linesep)
+            if ssr_pid.isdigit() and os.path.isdir(''.join([os.path.sep, 'proc', os.path.sep, ssr_pid])):
+                is_exist = True
+    return is_exist
 
 
 @log_except
@@ -76,7 +63,7 @@ if __name__ == '__main__':
             os.dup2(so.fileno(), sys.stdout.fileno())
             os.dup2(se.fileno(), sys.stderr.fileno())
             while True:
-                ret = check_active(port=port)
+                ret = check_active()
                 if ret is not None:
                     pass
                     if ret:
