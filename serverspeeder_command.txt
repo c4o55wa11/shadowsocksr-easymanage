@@ -1,0 +1,30 @@
+<1>SSR在线安装
+1.wget -N --no-check-certificate https://raw.githubusercontent.com/91yun/shadowsocks_install/master/shadowsocksR.sh && bash shadowsocksR.sh
+2.升级方法
+cd /usr/local/shadowsocks/shadowsocks
+git pull
+3.常用命令
+启动：/etc/init.d/shadowsocks start
+停止：/etc/init.d/shadowsocks stop
+重启：/etc/init.d/shadowsocks restart
+状态：/etc/init.d/shadowsocks status
+卸载：./shadowsocksR.sh uninstall
+
+配置文件路径：/etc/shadowsocks.json
+日志文件路径：/var/log/shadowsocks.log
+安装路径：/usr/local/shadowsocks/shadowsoks
+
+<2>锐速安装
+1:修改内核 modify kernel (此处针对centos7,如无必要跳过该步骤)
+rpm -ivh http://soft.91yun.org/ISO/Linux/CentOS/kernel/kernel-3.10.0-229.1.2.el7.x86_64.rpm --force
+2.重启 
+reboot
+3.安装锐速 install serverspeeder
+wget -N --no-check-certificate https://raw.githubusercontent.com/91yun/serverspeeder/master/serverspeeder-all.sh&& bash serverspeeder-all.sh
+4.其它指令 other commands
+chattr -i /serverspeeder/etc/apx*&& /serverspeeder/bin/serverSpeeder.sh uninstall –f #卸载锐速
+/serverspeeder/bin/serverSpeeder.sh start #启动锐速
+/serverspeeder/bin/serverSpeeder.sh stop #停止锐速
+/serverspeeder/bin/serverSpeeder.sh restart#重启锐速
+/serverspeeder/bin/serverSpeeder.sh status#锐速运行状态
+
